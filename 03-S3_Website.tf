@@ -3,7 +3,7 @@ resource "random_pet" "s3_bucket_name" {
     length = 2  
 }
 resource "aws_s3_bucket" "S3_bucket" {
-  bucket = "R3_bucket-${random_pet.s3_bucket_name.id}"
+  bucket = "r3-bucket-${random_pet.s3_bucket_name.id}"
 
  tags = merge(
     local.common_tags,
@@ -42,6 +42,7 @@ resource "aws_s3_bucket_policy" "S3_bucket_policy" {
       }
     ]
   })
+  depends_on = [aws_s3_bucket_public_access_block.S3_bucket_public_access_block, aws_s3_bucket_versioning.S3_bucket_versioning]
   
 }
 
